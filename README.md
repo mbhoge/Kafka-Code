@@ -1,3 +1,3 @@
 # Kafka-Code
 
-Apache Kafka Code with nuts & Bolts
+Apache Kafka Code with Nuts & Bolts
