@@ -59,22 +59,50 @@ public class ConsumerDemoWithThread {
     }
 
     public void run(){
+        Logger logger = LoggerFactory.getLogger(ConsumerDemoWithThread.class.getName());
+
         CountDownLatch latch = new CountDownLatch(1);
-        Runnable myConsumerThread = new ConsumerThread(latch);
+        Runnable myConsumerRunnable = new ConsumerRunnable(latch);
+
+        // Start the thread
+        Thread myThread = new Thread(myConsumerRunnable);
+        myThread.start();
+
+        // Add Shutdown Hook
+        Runtime.getRuntime().addShutdownHook(new Thread(
+                () -> {
+                    logger.info("Caught Shutdown Hook");
+                    ((ConsumerRunnable) myConsumerRunnable).shutdown();
+                    try {
+                        latch.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    logger.info("Application has exited");
+                }
+        ));
+
+        try {
+            latch.wait();
+        } catch (InterruptedException e) {
+            logger.error("Application got interrupted", e);
+            e.printStackTrace();
+        }finally {
+            logger.info("Application is closing");
+        }
     }
 
-    public class ConsumerThread implements Runnable{
+    public class ConsumerRunnable implements Runnable{
 
         private CountDownLatch latch;
         private KafkaConsumer<String, String> consumer;
         // Create Consumer configuration
 
-        private Logger logger = LoggerFactory.getLogger(ConsumerThread.class.getName());
+        private Logger logger = LoggerFactory.getLogger(ConsumerRunnable.class.getName());
 
-        public ConsumerThread(CountDownLatch latch){
+        public ConsumerRunnable(CountDownLatch latch){
             this.latch = latch;
             Properties properties = new Properties();
-            consumer = new KafkaConsumer<String, String>(properties);
             properties.setProperty("bootstrap.servers","pkc-l9wvm.ap-southeast-1.aws.confluent.cloud:9092");
             properties.setProperty("security.protocol","SASL_SSL");
             properties.setProperty("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='<GitGardian>' password='+ThankyouGitGuardian+';");
@@ -82,8 +110,10 @@ public class ConsumerDemoWithThread {
             properties.setProperty("key.deserializer", StringDeserializer.class.getName());
             properties.setProperty("value.deserializer",StringDeserializer.class.getName());
             properties.setProperty("sasl.mechanism","PLAIN");
-            properties.setProperty("group.id","mygroup-thread-application");
+            properties.setProperty("group.id","mygroup");
             properties.setProperty("auto.offset.reset","earliest");
+
+            consumer = new KafkaConsumer<String, String>(properties);
             consumer.subscribe(Arrays.asList("topic_0"));
         }
 
