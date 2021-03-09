@@ -31,7 +31,7 @@ public class TwitterProducer {
     String consumerSecret = "vQ5DWM0mikHgjdAiJXI05Myn3IWl67S654b1g4nLV9v93XoDFh";
     String token = "97631035-QZ9zFTaJd20xfAkmraxThfZesF137n6Jq6iBl3nb1";
     String secret = "04BOXIhghCS8tejdogSlqC3pggEwL02WhbxOqG0Ms3kJF";
-    ArrayList<String> terms = Lists.newArrayList("Kafka");
+    ArrayList<String> terms = Lists.newArrayList("Covid19");
 
     public TwitterProducer(){}
     public static void main(String[] args) {
@@ -111,7 +111,7 @@ public class TwitterProducer {
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers","pkc-l9wvm.ap-southeast-1.aws.confluent.cloud:9092");
         properties.setProperty("security.protocol","SASL_SSL");
-        properties.setProperty("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='<GitGardian>' password='+ThankyouGitGuardian+';");
+        properties.setProperty("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='3D4YKEZMJSEFMDJ2' password='+GHhCSJ8MrzvRo5dBjeQa42RKZIvO1iyLvsCSNyrZQTnlKFh83r+mnrBlpVNElAo';");
         properties.setProperty("key.serializer", StringSerializer.class.getName());
         properties.setProperty("value.serializer",StringSerializer.class.getName());
         properties.setProperty("sasl.mechanism","PLAIN");

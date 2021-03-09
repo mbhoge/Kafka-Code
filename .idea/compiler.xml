@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="udemy-sm-kafka" target="1.5" />
+      <module name="udemy-sm-kafka" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

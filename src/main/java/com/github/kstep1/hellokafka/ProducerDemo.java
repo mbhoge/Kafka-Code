@@ -13,7 +13,7 @@ public class ProducerDemo {
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers","pkc-l9wvm.ap-southeast-1.aws.confluent.cloud:9092");
         properties.setProperty("security.protocol","SASL_SSL");
-        properties.setProperty("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='<GitGuardian>' password='ThankyouGitGardian++';");
+        properties.setProperty("sasl.jaas.config","org.apache.kafka.common.security.plain.PlainLoginModule required username='3D4YKEZMJSEFMDJ2' password='+GHhCSJ8MrzvRo5dBjeQa42RKZIvO1iyLvsCSNyrZQTnlKFh83r+mnrBlpVNElAo';");
         properties.setProperty("key.serializer", StringSerializer.class.getName());
         properties.setProperty("value.serializer",StringSerializer.class.getName());
         properties.setProperty("sasl.mechanism","PLAIN");
